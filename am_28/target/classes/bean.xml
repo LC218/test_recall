@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+        <!--分析：
+                1，引入db.properyies 属性值
+                2. 创建连接池对象，设置4个属性
+                3. 创建jdbctemplate 注入dateSource
+                4. 包扫描  dao  service
+
+        -->
+        <context:property-placeholder location="classpath:db.properties"/>
+        <bean id="dateSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+                <property name="driverClassName" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+        </bean>
+
+        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+                <property name="dataSource" ref="dateSource"/>
+        </bean>
+</beans>
